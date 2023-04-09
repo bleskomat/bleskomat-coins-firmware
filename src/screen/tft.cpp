@@ -6,9 +6,10 @@ namespace {
 	const auto bg_color = TFT_WHITE;
 	const auto text_color = TFT_BLACK;
 	const uint8_t text_font = 4;
-	const uint8_t text_size = 2;
-	const uint8_t margin_x = 4;
-	const uint8_t margin_y = 12;
+	const uint8_t text_size_insert_fiat = 2;
+	const uint8_t text_size_trade_completed = 1;
+	const uint8_t margin_x = 2;
+	const uint8_t margin_y = 6;
 	std::string current_screen = "";
 
 	struct BoundingBox {
@@ -26,6 +27,7 @@ namespace {
 
 	BoundingBox renderText(
 		const std::string &t_text,
+		const uint8_t &text_size,
 		const int16_t &x,
 		const int16_t &y,
 		const bool &center = true
@@ -139,7 +141,7 @@ namespace screen_tft {
 		const int16_t center_x = display.width() / 2;
 		const int16_t text_x = center_x;
 		const int16_t text_y = margin_y;
-		amount_text_bbox = renderText(text, text_x, text_y, true/* center */);
+		amount_text_bbox = renderText(text, text_size_insert_fiat, text_x, text_y, true/* center */);
 		current_screen = "insertFiat";
 	}
 
@@ -149,7 +151,7 @@ namespace screen_tft {
 		const int16_t center_x = display.width() / 2;
 		const int16_t text_x = center_x;
 		const int16_t text_y = margin_y;
-		amount_text_bbox = renderText(text, text_x, text_y, true/* center */);
+		amount_text_bbox = renderText(text, text_size_trade_completed, text_x, text_y, true/* center */);
 		const int16_t qr_x = center_x;
 		const int16_t qr_y = amount_text_bbox.y + amount_text_bbox.h + margin_y;
 		const int16_t qr_max_w = display.width();
