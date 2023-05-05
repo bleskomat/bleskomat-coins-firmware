@@ -12,7 +12,6 @@ void setup() {
 	jsonRpc::init();
 	screen::init();
 	coinAcceptor::init();
-	// billAcceptor::init();
 	button::init();
 	buttonDelay = config::getUnsignedInt("buttonDelay");
 }
@@ -31,7 +30,6 @@ void inhibitAcceptors() {
 
 void resetAccumulatedValues() {
 	coinAcceptor::resetAccumulatedValue();
-	// billAcceptor::resetAccumulatedValue();
 }
 
 float amountShown = 0;
@@ -46,7 +44,6 @@ void writeTradeCompleteLog(const float &amount, const std::string &signedUrl) {
 
 void runAppLoop() {
 	coinAcceptor::loop();
-	// billAcceptor::loop();
 	button::loop();
 	const std::string currentScreen = screen::getCurrentScreen();
 	if (currentScreen == "") {
@@ -54,7 +51,6 @@ void runAppLoop() {
 	}
 	float accumulatedValue = 0;
 	accumulatedValue += coinAcceptor::getAccumulatedValue();
-	// accumulatedValue += billAcceptor::getAccumulatedValue();
 	if (
 		accumulatedValue > 0 &&
 		currentScreen != "insertFiat" &&
