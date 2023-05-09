@@ -2,7 +2,6 @@
 #define BLESKOMAT_COIN_ACCEPTOR_H
 
 #include "coin-acceptor/dg600f.h"
-#include "coin-acceptor/hx616.h"
 #include "config.h"
 #include "logger.h"
 

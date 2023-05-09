@@ -13,12 +13,10 @@ namespace {
 		{ "uriSchemaPrefix", "" },
 		{ "fiatCurrency", "EUR" },
 		{ "fiatPrecision", "2" },
-		{ "coinValues", "0.05,0.10,0.20,0.50,1.00,2.00" },// DG600F
-		{ "coinValueIncrement", "0.05" },// HX616
-		{ "coinSignalPin", "3" },
-		{ "coinInhibitPin", "1" },
+		{ "coinValues", "0.05,0.10,0.20,0.50,1.00,2.00" },
+		{ "coinSignalPin", "16" },
+		{ "coinInhibitPin", "21" },
 		{ "coinBaudRate", "9600" },
-		{ "coinAcceptorType", "hx616" },
 		{ "buttonPin", "33" },
 		{ "buttonDelay", "5000" },
 		{ "buttonDebounce", "100" },
@@ -154,19 +152,18 @@ namespace config {
 		// values["callbackUrl"] = "https://p.bleskomat.com/u";
 		// values["shorten"] = "true";
 		// values["uriSchemaPrefix"] = "";
-		// values["fiatCurrency"] = "EUR";
-		// values["fiatPrecision"] = "2";
-		// values["coinValues"] = "0.05,0.10,0.20,0.50,1.00,2.00";// DG600F
-		// values["coinValueIncrement"] = "0.05";// HX616
-		// values["coinSignalPin"] = "3";
-		// values["coinInhibitPin"] = "1";
+		// values["fiatCurrency"] = "CZK";
+		// values["fiatPrecision"] = "0";
+		// values["coinValues"] = "1.00,2.00,5.00,10.00,20.00,50.00";
+		// values["coinSignalPin"] = "16";
+		// values["coinInhibitPin"] = "21";
 		// values["coinBaudRate"] = "9600";
-		// values["coinAcceptorType"] = "hx616";
 		// values["buttonPin"] = "33";
 		// values["buttonDelay"] = "2000";
 		// values["buttonDebounce"] = "50";
 		// values["tftRotation"] = "2";
 		// values["logLevel"] = "info";
+		// values["spiffsFormatted"] = "true";
 	}
 
 	Lnurl::SignerConfig getLnurlSignerConfig() {
