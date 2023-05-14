@@ -1,6 +1,7 @@
 #ifndef BLESKOMAT_SCREEN_H
 #define BLESKOMAT_SCREEN_H
 
+#include "cache.h"
 #include "config.h"
 #include "logger.h"
 #include "screen/tft.h"

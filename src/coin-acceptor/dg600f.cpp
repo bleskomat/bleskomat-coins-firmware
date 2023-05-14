@@ -93,6 +93,10 @@ namespace coinAcceptor_dg600f {
 		return accumulatedValue;
 	}
 
+	void setAccumulatedValue(float value) {
+		accumulatedValue = value;
+	}
+
 	void resetAccumulatedValue() {
 		accumulatedValue = 0.00;
 	}

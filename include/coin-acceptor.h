@@ -9,6 +9,7 @@ namespace coinAcceptor {
 	void init();
 	void loop();
 	float getAccumulatedValue();
+	void setAccumulatedValue(float value);
 	void resetAccumulatedValue();
 	bool isInhibited();
 	void inhibit();

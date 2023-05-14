@@ -18,6 +18,10 @@ namespace coinAcceptor {
 		return coinAcceptor_dg600f::getAccumulatedValue();
 	}
 
+	void setAccumulatedValue(float value) {
+		coinAcceptor_dg600f::setAccumulatedValue(value);
+	}
+
 	void resetAccumulatedValue() {
 		logger::write("Resetting coin acceptor accumulated value");
 		coinAcceptor_dg600f::resetAccumulatedValue();

@@ -13,6 +13,7 @@ namespace coinAcceptor_dg600f {
 	void init();
 	void loop();
 	float getAccumulatedValue();
+	void setAccumulatedValue(float value);
 	void resetAccumulatedValue();
 	void inhibit();
 	void disinhibit();

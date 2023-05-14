@@ -1,6 +1,7 @@
 #ifndef BLESKOMAT_MAIN_H
 #define BLESKOMAT_MAIN_H
 
+#include "cache.h"
 #include "button.h"
 #include "coin-acceptor.h"
 #include "config.h"

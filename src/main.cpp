@@ -1,6 +1,7 @@
 #include "main.h"
 
 unsigned int buttonDelay;
+std::string initializeScreen = "";
 
 void setup() {
 	Serial.begin(MONITOR_SPEED);
@@ -13,6 +14,8 @@ void setup() {
 	screen::init();
 	coinAcceptor::init();
 	button::init();
+	initializeScreen = cache::getString("lastScreen");
+	logger::write("Cache loaded lastScreen: " + initializeScreen);
 	buttonDelay = config::getUnsignedInt("buttonDelay");
 }
 
@@ -47,7 +50,29 @@ void runAppLoop() {
 	button::loop();
 	const std::string currentScreen = screen::getCurrentScreen();
 	if (currentScreen == "") {
-		screen::showInsertFiatScreen(0);
+		if (initializeScreen == "insertFiat") {
+			const std::string cacheAccumulatedValue = cache::getString("accumulatedValue");
+			logger::write("Cache loaded accumulatedValue: " + cacheAccumulatedValue);
+			if (cacheAccumulatedValue != "") {
+				coinAcceptor::setAccumulatedValue(util::stringToFloat(cacheAccumulatedValue));
+				screen::showInsertFiatScreen(util::stringToFloat(cacheAccumulatedValue));
+			} else {
+				screen::showInsertFiatScreen(0);
+			}
+		} else if (initializeScreen == "tradeComplete") {
+			const std::string cachedQrcodeData = cache::getString("qrcodeData");
+			const std::string cachedAccumulatedValue = cache::getString("accumulatedValue");
+			logger::write("Cache loaded qrcodeData: " + cachedQrcodeData);
+			logger::write("Cache loaded accumulatedValue: " + cachedAccumulatedValue);
+			if (cachedQrcodeData != "" && cachedAccumulatedValue != "") {
+				inhibitAcceptors();
+				screen::showTradeCompleteScreen(util::stringToFloat(cachedAccumulatedValue), cachedQrcodeData);
+			} else {
+				screen::showInsertFiatScreen(0);
+			}
+		} else {
+			screen::showInsertFiatScreen(0);
+		}
 	}
 	float accumulatedValue = 0;
 	accumulatedValue += coinAcceptor::getAccumulatedValue();
