@@ -29,6 +29,7 @@ namespace util {
 	std::string floatVectorToStringList(const std::vector<float> floatVector, const char &delimiter = ',');
 	std::string urlEncode(const std::string &value);
 	std::string floatToStringWithPrecision(const float &value, const unsigned short &precision = 6);
+	float stringToFloat(const std::string& str);
 }
 
 #endif

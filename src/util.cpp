@@ -86,5 +86,9 @@ namespace util {
 		out << std::fixed << value;
 		return out.str();
 	}
+
+	float stringToFloat(const std::string& str) {
+		return std::stof(str);
+	}
 }
 
