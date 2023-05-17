@@ -18,19 +18,22 @@ PLATFORM=espressif32
 .PHONY: install\
 compile\
 upload\
-monitor
+monitor\
+.git-commit-hash
 
 install:
-	platformio lib install
-	platformio platform install ${PLATFORM}
+	pio pkg install --platform ${PLATFORM}
 
-compile:
-	platformio run
+compile: .git-commit-hash
+	pio run
 
-upload:
+upload: .git-commit-hash
 	sudo chown ${USER}:${USER} ${DEVICE}
-	platformio run --upload-port ${DEVICE} --target upload
+	pio run --upload-port ${DEVICE} --target upload
 
 monitor:
 	sudo chown ${USER}:${USER} ${DEVICE}
-	platformio device monitor --baud ${BAUDRATE} --port ${DEVICE}
+	pio device monitor --baud ${BAUDRATE} --port ${DEVICE}
+
+.git-commit-hash:
+	-git rev-parse HEAD 2>/dev/null && git rev-parse HEAD > .git-commit-hash
