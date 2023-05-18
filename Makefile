@@ -7,9 +7,11 @@
 #
 
 ## Variables
-DEVICE ?= /dev/ttyUSB0
 BAUDRATE ?= 115200
+DEVICE ?= /dev/ttyUSB0
+FONTS=./assets/fonts
 PLATFORM=espressif32
+SCRIPTS=./scripts
 
 ## Phony targets - these are for when the target-side of a definition
 # (such as "install" below) isn't a file but instead just a label. Declaring
@@ -37,3 +39,12 @@ monitor:
 
 .git-commit-hash:
 	-git rev-parse HEAD 2>/dev/null && git rev-parse HEAD > .git-commit-hash
+
+fonts: fontconvert
+	$(SCRIPTS)/generate-font-header-files.sh "$(FONTS)/CheckbookLightning/CheckbookLightning.ttf" 32-122 20,24,26,28,30,32
+	$(SCRIPTS)/generate-font-header-files.sh "$(FONTS)/Courier Prime Code/Courier Prime Code.ttf" 32-382 8,9,10,12,14,16,18,20,22,24,26,28
+
+fontconvert: ./tools/Adafruit-GFX-Library/fontconvert/fontconvert
+
+./tools/Adafruit-GFX-Library/fontconvert/fontconvert:
+	cd ./tools/Adafruit-GFX-Library/fontconvert && make fontconvert

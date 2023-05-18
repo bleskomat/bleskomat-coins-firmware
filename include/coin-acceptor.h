@@ -1,9 +1,13 @@
 #ifndef BLESKOMAT_COIN_ACCEPTOR_H
 #define BLESKOMAT_COIN_ACCEPTOR_H
 
-#include "coin-acceptor/dg600f.h"
 #include "config.h"
 #include "logger.h"
+#include "util.h"
+
+#include <HardwareSerial.h>
+
+#include <deque>
 
 namespace coinAcceptor {
 	void init();
@@ -11,7 +15,6 @@ namespace coinAcceptor {
 	float getAccumulatedValue();
 	void setAccumulatedValue(float value);
 	void resetAccumulatedValue();
-	bool isInhibited();
 	void inhibit();
 	void disinhibit();
 }

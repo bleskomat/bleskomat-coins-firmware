@@ -19,8 +19,9 @@ namespace {
 		{ "coinBaudRate", "9600" },
 		{ "buttonPin", "33" },
 		{ "buttonDelay", "5000" },
-		{ "buttonDebounce", "100" },
+		{ "buttonDebounce", "200" },
 		{ "tftRotation", "3" },
+		{ "locale", "en" },
 		{ "logLevel", "info" },
 		{ "spiffsFormatted", "false" }
 	};
@@ -160,8 +161,9 @@ namespace config {
 		// values["coinBaudRate"] = "9600";
 		// values["buttonPin"] = "33";
 		// values["buttonDelay"] = "2000";
-		// values["buttonDebounce"] = "50";
+		// values["buttonDebounce"] = "200";
 		// values["tftRotation"] = "2";
+		// values["locale"] = "en";
 		// values["logLevel"] = "info";
 		// values["spiffsFormatted"] = "true";
 	}

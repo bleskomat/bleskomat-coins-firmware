@@ -19,24 +19,13 @@ void setup() {
 	buttonDelay = config::getUnsignedInt("buttonDelay");
 }
 
-void disinhibitAcceptors() {
-	if (coinAcceptor::isInhibited()) {
-		coinAcceptor::disinhibit();
-	}
-}
-
-void inhibitAcceptors() {
-	if (!coinAcceptor::isInhibited()) {
-		coinAcceptor::inhibit();
-	}
-}
-
 void resetAccumulatedValues() {
 	coinAcceptor::resetAccumulatedValue();
 }
 
 float amountShown = 0;
 unsigned long tradeCompleteTime = 0;
+unsigned long lastScreenSwitchTime = 0;
 
 void writeTradeCompleteLog(const float &amount, const std::string &signedUrl) {
 	std::string msg = "Trade completed:\n";
@@ -57,7 +46,7 @@ void runAppLoop() {
 				coinAcceptor::setAccumulatedValue(util::stringToFloat(cacheAccumulatedValue));
 				screen::showInsertFiatScreen(util::stringToFloat(cacheAccumulatedValue));
 			} else {
-				screen::showInsertFiatScreen(0);
+				screen::showSplashScreen();
 			}
 		} else if (initializeScreen == "tradeComplete") {
 			const std::string cachedQrcodeData = cache::getString("qrcodeData");
@@ -65,14 +54,15 @@ void runAppLoop() {
 			logger::write("Cache loaded qrcodeData: " + cachedQrcodeData);
 			logger::write("Cache loaded accumulatedValue: " + cachedAccumulatedValue);
 			if (cachedQrcodeData != "" && cachedAccumulatedValue != "") {
-				inhibitAcceptors();
+				coinAcceptor::inhibit();
 				screen::showTradeCompleteScreen(util::stringToFloat(cachedAccumulatedValue), cachedQrcodeData);
 			} else {
-				screen::showInsertFiatScreen(0);
+				screen::showSplashScreen();
 			}
 		} else {
-			screen::showInsertFiatScreen(0);
+			screen::showSplashScreen();
 		}
+		initializeScreen = "";
 	}
 	float accumulatedValue = 0;
 	accumulatedValue += coinAcceptor::getAccumulatedValue();
@@ -81,12 +71,18 @@ void runAppLoop() {
 		currentScreen != "insertFiat" &&
 		currentScreen != "tradeComplete"
 	) {
+		coinAcceptor::disinhibit();
 		screen::showInsertFiatScreen(accumulatedValue);
 		amountShown = accumulatedValue;
 	}
-	if (currentScreen == "insertFiat") {
-		disinhibitAcceptors();
-		if (button::isPressed()) {
+	if (currentScreen == "splash") {
+		if (button::wasPushed()) {
+			coinAcceptor::disinhibit();
+			screen::showInsertFiatScreen(0);
+		}
+	} else if (currentScreen == "insertFiat") {
+		coinAcceptor::disinhibit();
+		if (button::wasPushed()) {
 			if (accumulatedValue > 0) {
 				// Button pushed while insert fiat screen shown and accumulated value greater than 0.
 				// Create a withdraw request and render it as a QR code.
@@ -100,8 +96,10 @@ void runAppLoop() {
 				qrcodeData += util::toUpperCase(encoded);
 				screen::showTradeCompleteScreen(accumulatedValue, qrcodeData);
 				writeTradeCompleteLog(accumulatedValue, signedUrl);
-				inhibitAcceptors();
+				coinAcceptor::inhibit();
 				tradeCompleteTime = millis();
+			} else {
+				screen::showSplashScreen();
 			}
 		} else {
 			// Button not pressed.
@@ -112,14 +110,14 @@ void runAppLoop() {
 			}
 		}
 	} else if (currentScreen == "tradeComplete") {
-		inhibitAcceptors();
-		if (button::isPressed() && millis() - tradeCompleteTime > buttonDelay) {
+		coinAcceptor::inhibit();
+		if (button::wasPushed() && millis() - tradeCompleteTime > buttonDelay) {
 			// Button pushed while showing the trade complete screen.
 			// Reset accumulated values.
 			resetAccumulatedValues();
+			coinAcceptor::disinhibit();
+			screen::showSplashScreen();
 			amountShown = 0;
-			screen::showInsertFiatScreen(0);
-			logger::write("Screen cleared");
 		}
 	}
 }

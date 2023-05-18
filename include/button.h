@@ -10,6 +10,7 @@ namespace button {
 	void init();
 	void loop();
 	bool isPressed();
+	bool wasPushed();
 }
 
 #endif

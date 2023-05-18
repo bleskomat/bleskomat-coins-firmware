@@ -10,6 +10,7 @@ namespace {
 	State state = State::uninitialized;
 
 	bool pressed = false;
+	bool pushed = false;
 	int lastState;
 	unsigned long lastStateChangeTime = 0;// Last time the button pin was toggled.
 	unsigned int debounceDelay;// Debounce time; increase it if the output flickers
@@ -38,9 +39,11 @@ namespace button {
 				if (state != lastState) {
 					if (state == HIGH) {
 						pressed = true;
+						pushed = false;
 						logger::write("Button pressed");
 					} else {
 						pressed = false;
+						pushed = true;
 						logger::write("Button released");
 					}
 					// Reset the debouncing timer.
@@ -54,5 +57,13 @@ namespace button {
 
 	bool isPressed() {
 		return pressed;
+	}
+
+	bool wasPushed() {
+		if (pushed && millis() - lastStateChangeTime <= debounceDelay) {
+			pushed = false;
+			return true;
+		}
+		return false;
 	}
 }

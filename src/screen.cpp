@@ -19,14 +19,21 @@ namespace screen {
 		return currentScreen;
 	}
 
+	void showSplashScreen() {
+		screen_tft::showSplashScreen();
+		setCurrentScreen("splash");
+		cache::save("accumulatedValue", "");
+	}
+
 	void showInsertFiatScreen(const float &amount) {
 		screen_tft::showInsertFiatScreen(amount);
 		setCurrentScreen("insertFiat");
+		cache::save("accumulatedValue", util::floatToStringWithPrecision(amount, config::getUnsignedShort("fiatPrecision")));
 	}
 
 	void showTradeCompleteScreen(const float &amount, const std::string &qrcodeData) {
 		screen_tft::showTradeCompleteScreen(amount, qrcodeData);
 		setCurrentScreen("tradeComplete");
-		cache::save("accumulatedValue", util::floatToStringWithPrecision(amount), "qrcodeData", qrcodeData);
+		cache::save("accumulatedValue", util::floatToStringWithPrecision(amount, config::getUnsignedShort("fiatPrecision")), "qrcodeData", qrcodeData);
 	}
 }
