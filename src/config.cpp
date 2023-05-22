@@ -2,8 +2,6 @@
 
 namespace {
 
-	typedef std::pair<const std::string, const std::string> KeyValuePair;
-
 	const std::map<const char*, const char*> defaultValues = {
 		{ "apiKey.id", "" },
 		{ "apiKey.key", "" },
@@ -112,23 +110,6 @@ namespace {
 			}
 		}
 		return true;
-	}
-
-	KeyValuePair readFromConfigLine(const std::string &line) {
-		// The character used to separate key/value pair - e.g "key=value".
-		const std::string delimiter = "=";
-		const auto pos = line.find(delimiter);
-		if (pos != std::string::npos) {
-			// Found delimiter.
-			const std::string key = line.substr(0, pos);
-			if (isConfigKey(key.c_str())) {
-				const std::string value = line.substr(pos + 1);
-				return std::make_pair(key, value);
-			} else {
-				logger::write("Unknown key found in configuration file: \"" + std::string(key) + "\"");
-			}
-		}
-		return std::make_pair("", "");
 	}
 }
 
