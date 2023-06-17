@@ -1,6 +1,6 @@
 # bleskomat-coins-firmware
 
-The Bleskomat Coins ATM is an offline Bitcoin Lightning Network ATM which accepts fiat bank notes and pays-out bitcoin. It's a great educational tool to give others a practical first experience with Bitcoin's Lightning Network.
+The Bleskomat Coins ATM is an offline Bitcoin Lightning Network ATM which accepts fiat coins and pays-out bitcoin. It's a great educational tool to give others a practical first experience with Bitcoin's Lightning Network.
 
 You can buy the [Bleskomat Coins ATM](https://shop.bleskomat.com/product/bleskomat-coins-atm/) from the official Bleskomat shop. Alternatively, you can find all the components and equipment needed and build your own.
 
