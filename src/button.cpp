@@ -66,4 +66,8 @@ namespace button {
 		}
 		return false;
 	}
+
+	bool isPressedAtStartup() {
+		return digitalRead(pinNumber) == HIGH;
+	}
 }
