@@ -10,6 +10,7 @@ namespace screen {
 	void init();
 	std::string getCurrentScreen();
 	void showSplashScreen();
+	void showWaitingToConnectScreen();
 	void showInsertFiatScreen(const float &amount);
 	void showTradeCompleteScreen(const float &amount, const std::string &qrcodeData);
 }

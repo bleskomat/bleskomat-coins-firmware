@@ -30,6 +30,8 @@ namespace {
 	#define SERVICE_UUID        "8771ff1c-4074-4bc0-9468-d9357cd7026b"
 	#define CHARACTERISTIC_UUID "af889f94-5be4-438c-a977-499c55f07a7b"
 
+	bool initialized = false;
+
 	void sendChunk(BLECharacteristic* characteristic, const std::string& chunk) {
 		characteristic->setValue(chunk);  // Set the value of the characteristic with the chunk
 		characteristic->notify();         // Notify connected devices of the new value
@@ -80,10 +82,15 @@ namespace bluetooth {
 		BLEAdvertising *pAdvertising = pServer->getAdvertising();
 		pAdvertising->start();
 		logger::write("Bluetooth server started");
+		initialized = true;
 	}
 
 	bool isConnected() {
 		return deviceConnected;
+	}
+
+	bool isInitialized() {
+		return initialized;
 	}
 
 	bool sendMessage(const std::string &message) {

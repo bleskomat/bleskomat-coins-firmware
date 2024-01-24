@@ -38,6 +38,7 @@ namespace screen_tft {
 	void init();
 	void showSplashScreen();
 	void showInsertFiatScreen(const float &amount);
+	void showWaitingToConnectScreen();
 	void showTradeCompleteScreen(const float &amount, const std::string &qrcodeData);
 }
 

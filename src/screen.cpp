@@ -25,6 +25,12 @@ namespace screen {
 		cache::save("accumulatedValue", "");
 	}
 
+	void showWaitingToConnectScreen() {
+		screen_tft::showWaitingToConnectScreen();
+		setCurrentScreen("waitingToConnect");
+		cache::save("accumulatedValue", "");
+	}
+
 	void showInsertFiatScreen(const float &amount) {
 		screen_tft::showInsertFiatScreen(amount);
 		setCurrentScreen("insertFiat");
