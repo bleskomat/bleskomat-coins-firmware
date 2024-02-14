@@ -132,8 +132,10 @@ void loop() {
 	if ((!jsonRpc::hasPinConflict() || !jsonRpc::inUse()) && !bluetooth::isInitialized()) {
 		runAppLoop();
 	} else if (bluetooth::isInitialized()) {
+		coinAcceptor::loop();
 		const std::string currentScreen = screen::getCurrentScreen();
 		if (currentScreen != "waitingToConnect") {
+			coinAcceptor::inhibit();
 			screen::showWaitingToConnectScreen();
 		}
 	}
