@@ -17,6 +17,10 @@ void setup() {
 	initializeScreen = cache::getString("lastScreen");
 	logger::write("Cache loaded lastScreen: " + initializeScreen);
 	buttonDelay = config::getUnsignedInt("buttonDelay");
+	if (button::isPressedAtStartup()) {
+		logger::write("Button pressed during startup, start bluetooth.");
+		bluetooth::init();
+	}
 }
 
 void resetAccumulatedValues() {
@@ -125,7 +129,14 @@ void runAppLoop() {
 void loop() {
 	logger::loop();
 	jsonRpc::loop();
-	if (!jsonRpc::hasPinConflict() || !jsonRpc::inUse()) {
+	if ((!jsonRpc::hasPinConflict() || !jsonRpc::inUse()) && !bluetooth::isInitialized()) {
 		runAppLoop();
+	} else if (bluetooth::isInitialized()) {
+		coinAcceptor::loop();
+		const std::string currentScreen = screen::getCurrentScreen();
+		if (currentScreen != "waitingToConnect") {
+			coinAcceptor::inhibit();
+			screen::showWaitingToConnectScreen();
+		}
 	}
 }

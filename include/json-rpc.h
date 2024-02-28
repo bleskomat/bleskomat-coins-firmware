@@ -5,6 +5,7 @@
 #include "logger.h"
 #include "main.h"
 #include "spiffs.h"
+#include "bluetooth.h"
 
 #include <ArduinoJson.h>
 #include <string>
@@ -14,6 +15,7 @@ namespace jsonRpc {
 	void loop();
 	bool inUse();
 	bool hasPinConflict();
+	void onBleMessage(const std::string &message);
 }
 
 #endif

@@ -227,6 +227,31 @@ namespace screen_tft {
 		}
 	}
 
+	void showWaitingToConnectScreen() {
+		clearScreen();
+		BoundingBox logoBBox;
+		{
+			const std::string text = "BLESKOMAT";
+			const uint16_t max_w = ((tft.width() * 8) / 10) - (margin * 2);
+			const GFXfont font = getBestFitFont(text, brandFonts, max_w);
+			amountTextBBox = renderText(text, font, textColor, center_x, margin * 8, TC_DATUM);
+		}
+		{
+			const std::string text = i18n::t("Waiting to Connect.");
+			const uint16_t max_w = ((tft.width() * 8) / 10) - (margin * 2);
+			const GFXfont font = getBestFitFont(text, monospaceFonts, max_w, (amountTextBBox.h * 6) / 10);
+			const int16_t text_y = amountTextBBox.y + amountTextBBox.h + (margin * 4);
+			renderText(text, font, textColor, center_x, text_y, TC_DATUM);
+		}
+		{
+			const std::string text = i18n::t("Bluetooth initialized.");
+			const uint16_t max_w = ((tft.width() * 9) / 10) - (margin * 2);
+			const GFXfont font = getBestFitFont(text, monospaceFonts, max_w, amountTextBBox.h / 2);
+			const int16_t text_y = tft.height() - margin;
+			renderText(text, font, textColor, center_x, text_y, BC_DATUM);
+		}
+	}
+
 	void showInsertFiatScreen(const float &amount) {
 		bool renderInstructionText = true;
 		if (amountTextBBox.w > 0) {

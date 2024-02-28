@@ -11,6 +11,7 @@ namespace button {
 	void loop();
 	bool isPressed();
 	bool wasPushed();
+	bool isPressedAtStartup();
 }
 
 #endif
