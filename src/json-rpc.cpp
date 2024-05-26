@@ -116,12 +116,11 @@ namespace {
 				docOut["result"] = docInfo;
 				sendToInterfaces(docOut);
 			} else if (method == "getconfig") {
-				const std::string paramsText = data["params"][0].as<const char*>();
 				DynamicJsonDocument docOut(JSON_DOC_SIZE);
 				docOut["jsonrpc"] = jsonRpcVersion;
 				docOut["id"] = id;
 				DynamicJsonDocument requestedConfigs(JSON_DOC_SIZE);
-				if (data["params"].is<JsonArray>()) {
+				if (data.containsKey("params") && data["params"].is<JsonArray>() && data["params"].as<JsonArray>().size() > 0) {
 					const JsonArray params = data["params"].as<JsonArray>();
 					for (const auto param : params) {
 						const std::string key = param.as<const char*>();
